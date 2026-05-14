@@ -1213,7 +1213,7 @@
 </script>
 
 <canvas id="bg-grid" class="bg"></canvas>
-<div id="hint">← → 翻页 · B 静态 · ESC 索引</div>
+<div id="hint">← → 翻页 · B 静态 · ESC 索引 · <button id="btn-export" onclick="exportPPTX()" style="background:none;border:none;color:inherit;font:inherit;cursor:pointer;opacity:.6;text-decoration:underline;padding:0">⬇ PPTX</button></div>
 
 <div id="deck">
 
@@ -1405,7 +1405,7 @@ addEventListener('mousemove',e=>{mouse.x=e.clientX/innerWidth;mouse.y=1-e.client
 
 function bootGL(canvasId, fsSrc){
   const canvas=document.getElementById(canvasId);
-  const gl=canvas.getContext('webgl',{alpha:true,antialias:true,premultipliedAlpha:false});
+  const gl=canvas.getContext('webgl',{alpha:true,antialias:true,premultipliedAlpha:false,preserveDrawingBuffer:true});
   if(!gl) return ()=>false;
   const mk=(t,s)=>{const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh};
   const prog=gl.createProgram();
@@ -2412,6 +2412,111 @@ if(motion){
   addEventListener('swiss-low-power-change', e=>{e.detail.on ? stop() : start();});
   start();
 })();
+</script>
+
+<script>
+/* =============== PPTX Export (lazy-loaded) =============== */
+async function exportPPTX(){
+  const btn=document.getElementById('btn-export');
+  const origText=btn.textContent;
+  btn.textContent='Loading...';btn.disabled=true;
+
+  try{
+    if(!window.PptxGenJS){
+      await loadScript('https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js');
+    }
+
+    const deck=document.getElementById('deck');
+    const slideEls=deck.querySelectorAll('.slide');
+    const total=slideEls.length;
+    const pptx=new PptxGenJS();
+    pptx.defineLayout({name:'WIDE',width:13.33,height:7.5});
+    pptx.layout='WIDE';
+
+    const savedIdx=window.__currentSlideIndex||0;
+    const wasLowPower=window.__lowPowerMode;
+    if(!wasLowPower) dispatchEvent(new CustomEvent('swiss-low-power-change',{detail:{on:true}}));
+
+    for(let i=0;i<total;i++){
+      btn.textContent=`Export ${i+1}/${total}`;
+      window.__playSlide && window.__playSlide(i);
+      deck.style.transform=`translateX(${-i*100}vw)`;
+      await sleep(200);
+
+      const canvas=document.createElement('canvas');
+      const W=2560,H=1440;
+      canvas.width=W;canvas.height=H;
+      const ctx=canvas.getContext('2d');
+
+      const bgGrid=document.getElementById('bg-grid');
+      const el=slideEls[i];
+      const isAccent=el.classList.contains('accent');
+      if(isAccent){
+        ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#002FA7';
+        ctx.fillRect(0,0,W,H);
+      }else if(bgGrid && bgGrid.width>0){
+        try{ctx.drawImage(bgGrid,0,0,W,H);}catch(e){}
+      }else{
+        ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim()||'#fafaf8';
+        ctx.fillRect(0,0,W,H);
+      }
+
+      const slideCanvas=await htmlToCanvas(el,W,H);
+      ctx.drawImage(slideCanvas,0,0,W,H);
+
+      const dataUrl=canvas.toDataURL('image/png');
+      const slide=pptx.addSlide();
+      slide.addImage({data:dataUrl,x:0,y:0,w:'100%',h:'100%'});
+
+      await new Promise(r=>requestAnimationFrame(r));
+    }
+
+    go(savedIdx);
+    if(!wasLowPower) dispatchEvent(new CustomEvent('swiss-low-power-change',{detail:{on:false}}));
+
+    const title=document.title.replace(/[^a-zA-Z0-9一-鿿 _-]/g,'').trim()||'presentation';
+    await pptx.writeFile({fileName:title+'.pptx'});
+    btn.textContent=origText;
+  }catch(e){
+    console.error('PPTX export failed:',e);
+    btn.textContent='Export failed';
+    setTimeout(()=>{btn.textContent=origText;},3000);
+  }finally{
+    btn.disabled=false;
+  }
+}
+
+function htmlToCanvas(el,w,h){
+  return new Promise((resolve)=>{
+    const clone=el.cloneNode(true);
+    clone.style.cssText=`width:${w}px;height:${h}px;position:fixed;top:0;left:0;z-index:-9999;transform:none;opacity:1;pointer-events:none`;
+    clone.querySelectorAll('[data-anim]').forEach(a=>{a.style.opacity='1';a.style.transform='none';});
+    document.body.appendChild(clone);
+    const c=document.createElement('canvas');
+    c.width=w;c.height=h;
+    const ctx=c.getContext('2d');
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
+      <foreignObject width="100%" height="100%">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="width:${w}px;height:${h}px">
+          ${new XMLSerializer().serializeToString(clone)}
+        </div>
+      </foreignObject>
+    </svg>`;
+    const img=new Image();
+    img.onload=()=>{ctx.drawImage(img,0,0);clone.remove();resolve(c);};
+    img.onerror=()=>{ctx.fillStyle='#fafaf8';ctx.fillRect(0,0,w,h);clone.remove();resolve(c);};
+    img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  });
+}
+
+function loadScript(src){
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src=src;s.onload=resolve;s.onerror=reject;
+    document.head.appendChild(s);
+  });
+}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 </script>
 </body>
 </html>
