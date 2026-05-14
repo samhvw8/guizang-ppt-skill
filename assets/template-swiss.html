@@ -1194,7 +1194,7 @@
     window.__lowPowerMode = stored === '1' || (stored === null && reduced);
     function updateHint(){
       const hint = document.getElementById('hint');
-      if(hint) hint.textContent = `← → 翻页 · B ${window.__lowPowerMode ? '动态' : '静态'} · ESC 索引`;
+      if(hint){ const eb=hint.querySelector('#btn-export'); hint.textContent = `← → swipe · B ${window.__lowPowerMode ? 'animated' : 'static'} · ESC overview`; if(eb) hint.appendChild(document.createTextNode(' · ')), hint.appendChild(eb); }
     }
     window.__setLowPowerMode = function(on, opts={}){
       window.__lowPowerMode = !!on;
@@ -1213,7 +1213,7 @@
 </script>
 
 <canvas id="bg-grid" class="bg"></canvas>
-<div id="hint">← → 翻页 · B 静态 · ESC 索引 · <button id="btn-export" onclick="exportPPTX()" style="background:none;border:none;color:inherit;font:inherit;cursor:pointer;opacity:.6;text-decoration:underline;padding:0">⬇ PPTX</button></div>
+<div id="hint">← → swipe · B static · ESC overview · <button id="btn-export" onclick="exportPPTX()" style="background:none;border:none;color:inherit;font:inherit;cursor:pointer;opacity:.6;text-decoration:underline;padding:0">⬇ PPTX</button></div>
 
 <div id="deck">
 
