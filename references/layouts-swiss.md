@@ -40,6 +40,7 @@ When generating body pages, do not treat Swiss as a "freely composable style pac
 - Large titles follow the actual usage in the original PPT: main title `font-weight:200`, emphasis words/numbers `font-weight:300`; do not bold Swiss large titles just because legacy CSS helpers had 800/900 remnants
 - Large type tightened: `letter-spacing:-.04em` / `line-height:.9`
 - Mono numbers: `font-feature-settings:"tnum","ss01"`
+- **CJK-Latin auto-spacing**: Both templates include `text-autospace: normal` on the body element, providing native spacing between CJK and Latin characters (Chrome 139+, Safari 18.4+, Firefox 145+). No manual spacing or pangu.js needed.
 
 **Chinese large title size tiers**
 Chinese block characters have heavier visual mass than Latin text, so you cannot directly apply the English page's `6.8vw-7vw`. Before generating, step down based on Chinese title length:
@@ -144,7 +145,7 @@ The bottom pagination dots are fixed at `bottom:2vh`, visually occupying the are
 - 8×8 / 12×12 sharp-cornered small squares instead of dots
 - Dot matrix `dot-mat` / stroke circles `ring-mat` / crosses `cross-mat` (SVG mask)
 
-**Image usage principles (Swiss + GPT-M 2.0)**
+**Image usage principles (Swiss + GPT Image 2)**
 - Images are "evidence blocks" in the grid, not decorative backgrounds; they must have a clear function: case study, documentary evidence, UI screenshot, system diagram, conceptual infographic
 - All image containers must be sharp-cornered, no shadows, no border-radius; by default **do not add image frames** — let captions or the page grid establish hierarchy
 - White-background infographics / flowcharts / UI diagrams: container background must be `var(--paper)`; do not use grey background to wrap white images, and do not add `.swiss-keyline` borders
@@ -154,7 +155,7 @@ The bottom pagination dots are fixed at `bottom:2vh`, visually occupying the are
 - Swiss image preferred ratios: S22 top banner `21:9`; S15/S16 multi-image grid uses uniform `21:9` or uniform `16:10`
 - When generating 2-3 accompanying images, you must first bind to original layout slots: single large image = S22; multiple images = S15/S16 grid adaptation; do not use unregistered P23/P24
 - S22 photo subjects must be in the central safe zone; HTML uses `object-position:center 35%` or `center center`, not `top center` which would crop faces
-- GPT-M 2.0 generated images must follow the single accent color, Helvetica/Inter aesthetic, 12/16 column grid, sharp corners with solid colors, no gradients/shadows/border-radius
+- GPT Image 2 generated images must follow the single accent color, Helvetica/Inter aesthetic, 12/16 column grid, sharp corners with solid colors, no gradients/shadows/border-radius
 - Generated images should contain only the core image itself; do not include header, footer, title, page number, corner marks, borders, or attribution within the image
 
 **Layout diversity hard rules**
@@ -170,6 +171,7 @@ The Swiss theme has 22 registered layouts; when generating, actively showcase th
 - Not a uniform fade-up, but **coupled to the graphic semantics**: numbers scale-pop in, bars scaleY grow, SVG rings stroke-dashoffset draw, timeline nodes sequentially light up
 - Easing: `EASE_PROD` `cubic-bezier(.2,0,.38,.9)` for productive (120-240ms), `EASE_ENTRY` `cubic-bezier(0,0,.3,1)` for expressive (400-700ms)
 - playSlide entry must reveal all `[data-anim]` containers to opacity:1; the recipe then uses motion `{opacity:[0,1]}` to override
+- **CSS @property count-up** (Baseline Jul 2024): KPI number reveals can use pure CSS `@property --num` with `counter()` — zero JavaScript. See `components.md` for the pattern.
 
 ---
 
@@ -676,7 +678,7 @@ Do not only look at HTML/CSS. Swiss template fidelity must be judged from both *
 **Key classes**: `.image-hero` `.hero-img-wrap` (60vh) `.hero-overlay-block` `.hero-stats`
 **Animation recipe**: `image-hero` — image slowly zooms out (scale 1.05→1) → white block scaleX 0→1 pushes open → three KPI top lines draw in sequence
 **Notes**:
-- Images should preferably use `images/{page-number}-{semantic}.png` local files (GPT-M 2.0 or user-provided assets); do not default to external unsplash links
+- Images should preferably use `images/{page-number}-{semantic}.png` local files (GPT Image 2 or user-provided assets); do not default to external unsplash links
 - Content below the image should not sit flush against the image bottom edge; use `.image-hero-body` to uniformly add top buffer to the lower half
 - Three-column KPI large font must be height-capped (`min(4.6vw, 7.6vh)`); small text uses `margin-top:auto` to anchor to column bottom, preventing overflow into nav dots
 - Column heights must be uniform (grid should not use `align-items:start`; let columns stretch to equal height)
@@ -742,7 +744,7 @@ The P23/P24 below are experimental layouts added early on to explore image-text 
     </div>
     <div style="flex:1;padding:0;display:grid;grid-template-rows:auto 1fr;gap:5vh">
       <div data-anim="head" style="display:flex;flex-direction:column;gap:1.4vh">
-        <div class="t-meta">Evidence · GPT-M 2.0</div>
+        <div class="t-meta">Evidence · GPT Image 2</div>
         <h2 style="font-family:var(--sans),var(--sans-zh);font-weight:200;font-size:min(7vw,12vh);line-height:.96;letter-spacing:-.035em">[REQUIRED] One core thesis statement</h2>
       </div>
       <div class="swiss-img-split align-image-bottom" data-anim="up">
@@ -776,7 +778,7 @@ The P23/P24 below are experimental layouts added early on to explore image-text 
 - Images in the same group must have identical ratio, height, and margin density; do not mix one 16:9, one 4:3, and one long strip screenshot
 - There must be clear buffer between the title area and image area; the template's `.swiss-img-grid` includes default top spacing — only add `.tight` when the outer grid already provides sufficient gap
 - UI/infographic images use uniform `.fit-contain`; photos use uniform cover
-- If the user's original screenshots have mixed ratios, first use GPT-M 2.0 to regenerate "screenshot redesigns" in a uniform ratio
+- If the user's original screenshots have mixed ratios, first use GPT Image 2 to regenerate "screenshot redesigns" in a uniform ratio
 
 ```html
 <section class="slide light" data-animate="grid-reveal">

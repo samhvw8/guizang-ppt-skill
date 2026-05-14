@@ -26,7 +26,7 @@ Generates a **single-file HTML** horizontal-swipe PPT with two visual styles to 
 - Templates: `assets/template-swiss.html` · Theme colors: `references/themes-swiss.md` · Layouts: `references/layouts-swiss.md`
 - Aesthetic anchor: like Massimo Vignelli + Helvetica Forever
 
-**Shared across both styles**: horizontal swiping (keyboard ← →, scroll wheel, touch, ESC index), Lucide icons, Motion One entrance animations (local + CDN dual fallback).
+**Shared across both styles**: horizontal swiping (keyboard ← →, scroll wheel, touch, ESC index; `scroll-snap-stop: always` prevents fast-swipe skipping), Lucide icons, Motion entrance animations (local + CDN dual fallback). Both templates include `text-autospace: normal` for native CJK-Latin spacing (Chrome 139+, Safari 18.4+, Firefox 145+).
 
 ## When to Use
 
@@ -76,7 +76,7 @@ Generates a **single-file HTML** horizontal-swipe PPT with two visual styles to 
 | Content is industry insights / humanities / stories / culture | A is a better fit |
 | User provided lots of KPI numbers / roadmaps / workflows | B is a better fit (`Data Hero` layout is Swiss style's forte) |
 | User provided lots of documentary photos / humanities imagery | A is a better fit (image grid, left-text-right-image are magazine style's forte) |
-| User needs GPT-M 2.0 to generate screenshots for redesign / infographics / evidence walls | B also works well (P23/P24 are Swiss style's dedicated image layouts) |
+| User needs GPT Image 2 to generate screenshots for redesign / infographics / evidence walls | B also works well (P23/P24 are Swiss style's dedicated image layouts) |
 
 #### Outline Assistance (if the user doesn't have an outline)
 
@@ -111,7 +111,7 @@ Explain these to the user before starting:
 
 #### Codex Image Generation (Optional)
 
-If the current runtime is **Codex**, after completing the deck draft, proactively ask the user whether they want to use GPT-M 2.0 to generate images and insert them into the PPT. Do not generate by default.
+If the current runtime is **Codex**, after completing the deck draft, proactively ask the user whether they want to use GPT Image 2 to generate images and insert them into the PPT. Do not generate by default.
 
 Recommended phrasing:
 
@@ -320,7 +320,7 @@ Always use **standard aspect ratios** — never use the source image's odd ratio
 - White-background GPT infographics/flowcharts/UI images should not have border strokes by default; do not casually apply `.swiss-keyline`; when emphasis is needed, only use `.swiss-lined` top accent line
 - For UI/infographic images that are user-submitted raw screenshots or text-dense, use `.fit-contain`; if regenerated to fit S15/S16 slots, must use `.frame-img.r-21x9` / `.frame-img.r-16x10` to fill the container — do not fix `height:18vh` and shrink the image
 - Multiple images in the same group must share uniform slot, ratio, and height — no mixing
-- GPT-M 2.0 generated images follow the "Style B: Swiss International Style Image Rules" in `image-prompts.md`
+- GPT Image 2 generated images follow the "Style B: Swiss International Style Image Rules" in `image-prompts.md`
 - The bottom edge of any image, caption, timeline label, or footnote must not enter the bottom pagination zone; when content needs to be near the bottom, use `.nav-safe-bottom` / `.nav-safe-bottom-tight` — do not hand-write `bottom:2vh`
 
 #### 3.2.1 · Chinese Heading Font Size Tiers (mandatory for Style B)
@@ -382,7 +382,7 @@ Code can only prove class names and structure exist — it cannot prove the layo
 15. **ESC index page visibility** — cloned slides must have a CSS override that sets `[data-anim]` to opacity:1 in thumbnails
 16. **Helvetica/Inter Chinese font fallback** — Windows users don't have "PingFang SC"; must fall back to `"Microsoft YaHei UI", "Noto Sans SC"`
 17. **Font weight conventions**: large text 200 / body 300 / `t-cat` SemiBold 600 / `t-meta` mono uppercase
-18. **Preserve low-power shortcut** — bottom-right corner must display `B Static`; pressing `B` toggles `body.low-power`, stopping WebGL/ASCII canvas RAF and Motion entrance animations
+18. **Preserve low-power shortcut** — bottom-right corner must display `B Static`; pressing `B` toggles `body.low-power`, stopping WebGL/ASCII canvas RAF and Motion entrance animations. Templates also respect `prefers-reduced-motion: reduce` — renders one frame then freezes all animation. Animations and WebGL automatically pause when the browser tab is hidden (Page Visibility API)
 19. **Decorative elements strictly within the grid** — bar matrices, dot patterns, ring-mat must not bleed to the edge or overflow the page
 20. **Reserve bottom nav space** — nav sits at ~97vh; content must not extend past 93vh (lesson from P22 KPI large text overflowing)
 21. **Image containers: sharp corners, no shadows** — `.frame-img` gets no `border-radius` / `box-shadow`; borders use hairlines only
@@ -414,7 +414,7 @@ guizang-ppt-skill/
 ├── assets/
 │   ├── template.html         ← Style A · Digital Magazine template (seed file)
 │   ├── template-swiss.html   ← Style B · Swiss International Style template (seed file)
-│   └── motion.min.js         ← Motion One local copy (offline fallback, ~64KB, shared)
+│   └── motion.min.js         ← Motion local copy (offline fallback, ~64KB, shared)
 ├── scripts/
 │   └── validate-swiss-deck.mjs ← Style B static validation: registered layouts, image slots, SVG text, heading alignment
 └── references/
@@ -425,7 +425,7 @@ guizang-ppt-skill/
     ├── swiss-map-component.md ← Style B · S08 map extension component (MapLibre markers/connections/cards/controls)
     ├── themes.md             ← Style A · 5 theme color presets (choose only, no customization)
     ├── themes-swiss.md       ← Style B · 4 Swiss theme color presets (IKB / lemon yellow / lime green / safety orange)
-    ├── image-prompts.md      ← GPT-M 2.0 image types, ratios, and base prompts
+    ├── image-prompts.md      ← GPT Image 2 image types, ratios, and base prompts
     └── checklist.md          ← Quality checklist (P0/P1/P2/P3 severity levels)
 ```
 
@@ -445,7 +445,7 @@ guizang-ppt-skill/
 7. For detail adjustments, read `components.md` for components (includes the Motion animation system chapter, primarily for Style A; Style B component details are in the `layouts-swiss.md` appendix)
 8. After generation, first run `node scripts/validate-swiss-deck.mjs path/to/index.html`, then read `checklist.md` for self-check
 
-**Animation notes**: The template has Motion One's loader and recipe logic embedded in the bottom module script. You don't need to edit JS — just add `data-anim` / `data-animate` in the HTML following the skeletons in `layouts.md` / `layouts-swiss.md`. Offline presentations rely on `assets/motion.min.js`, which gracefully degrades to "no animation but readable content" when disconnected. The Style B template must preserve the `B` key low-power mode: when toggled, it stops WebGL/ASCII canvas RAF, cancels running Web Animations, and reveals current page content directly to its static final state.
+**Animation notes**: The template has Motion's loader and recipe logic embedded in the bottom module script. You don't need to edit JS — just add `data-anim` / `data-animate` in the HTML following the skeletons in `layouts.md` / `layouts-swiss.md`. Offline presentations rely on `assets/motion.min.js`, which gracefully degrades to "no animation but readable content" when disconnected. The Style B template must preserve the `B` key low-power mode: when toggled, it stops WebGL/ASCII canvas RAF, cancels running Web Animations, and reveals current page content directly to its static final state.
 
 ## Core Design Principles (Philosophy)
 

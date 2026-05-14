@@ -143,7 +143,7 @@ Exception: When the head row carries both "left: kicker + main title (stacked ve
 
 ### 0-D. Swiss image integration: square corners, uniform height, evidence only
 
-**Symptom**: Images look like typical PPT illustrations — rounded corners, shadows, inconsistent proportions; multiple screenshots at different heights, or GPT-M 2.0 generated images include their own titles/footers that duplicate the page chrome.
+**Symptom**: Images look like typical PPT illustrations — rounded corners, shadows, inconsistent proportions; multiple screenshots at different heights, or GPT Image 2 generated images include their own titles/footers that duplicate the page chrome.
 
 **Root cause**: In Swiss style, images aren't decoration — they're evidence blocks within the grid. Without selecting an original layout and image slot first, arbitrary images get force-fit into the page.
 
@@ -154,7 +154,7 @@ Exception: When the head row carries both "left: kicker + main title (stacked ve
 - Image containers use `.frame-img` only; **no** `border-radius` / `box-shadow`
 - For UI / infographics / flowcharts that are original screenshots or text-heavy images, use `.fit-contain`; if regenerated to fit the slot, use the corresponding ratio class to fill the container, e.g., `.frame-img.r-21x9` — don't use a fixed short height that shrinks the image
 - Multiple images in the same group must use uniform slots, ratios, and heights — no mixing
-- GPT-M 2.0 prompts must specify: Swiss Style, single accent, square corners, no gradients/shadows/rounded corners, no header/footer/title/badges
+- GPT Image 2 prompts must specify: Swiss Style, single accent, square corners, no gradients/shadows/rounded corners, no header/footer/title/badges
 
 **Self-check commands**:
 - `grep -E "frame-img.*border-radius|box-shadow" index.html` — delete any matches
@@ -229,12 +229,14 @@ Exception: When the head row carries both "left: kicker + main title (stacked ve
 **What to do**: Use the Lucide icon library via CDN:
 
 ```html
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/lucide@1.16.0/dist/umd/lucide.min.js"></script>
 ...
 <i data-lucide="target" class="ico-md"></i>
 ...
 <script>lucide.createIcons();</script>
 ```
+
+Pin Lucide version — brand icons (GitHub, Twitter, etc.) were removed in v1.0. Use [Simple Icons](https://simpleicons.org/) for brand logos.
 
 Common icon names: `target / palette / search-check / compass / share-2 / crown / check-circle / x-circle / plus / arrow-right / grid-2x2 / network`
 
@@ -377,7 +379,7 @@ Use `XX / TOTAL` format (e.g., `05 / 27`). **Don't add dynamic page numbers in t
 
 **Symptom**: After generating, the browser shows content appearing with a hard "snap" on page transition — no rhythm. The magazine style relies entirely on layout, missing the ceremonial feel of layered reveals.
 
-**Root cause**: No `data-anim` attributes were added to any elements, so Motion One has nothing to animate — the entire page appears statically.
+**Root cause**: No `data-anim` attributes were added to any elements, so Motion has nothing to animate — the entire page appears statically.
 
 **What to do**:
 - On all body pages, **at minimum add `data-anim` to kicker / main title / lead / callout / stat-card / figure leaf elements**
@@ -441,7 +443,7 @@ Dark hero can use shaders with center structures like Holographic Dispersion (ti
 
 ### 13d. Generated images should not contain slide elements
 
-- GPT-M 2.0 generated images are embedded assets only — don't let images include their own headers, footers, titles, page numbers, badges, credits, or decorative borders
+- GPT Image 2 generated images are embedded assets only — don't let images include their own headers, footers, titles, page numbers, badges, credits, or decorative borders
 - Flowcharts/infographics should only contain core graphics and essential short labels — the PPT itself handles titles, footers, and chrome
 - If a generated image already has these elements, regenerate first — don't layer another chrome on top in the PPT causing visual noise
 
@@ -534,6 +536,15 @@ Animation
   □ Before/After comparison pages have `data-animate="directional"` on `<section>`, left/right columns marked left/right
   □ Pipeline pages have `data-animate="pipeline"` on `<section>`, each step marked data-anim="step"
   □ `grep -c 'data-anim' index.html` count ≥ page count × 3 (average 3+ markers per page)
+```
+
+Accessibility & Performance
+  □ `prefers-reduced-motion` respected — one frame rendered, then frozen
+  □ Page Visibility API pauses WebGL/animations when tab hidden
+  □ WebGL context loss handled (`webglcontextlost` / `webglcontextrestored`)
+  □ `scroll-snap-stop: always` on all slides (prevents fast-swipe skipping)
+  □ `overscroll-behavior-x: contain` on slide container
+  □ `text-autospace: normal` on body (native CJK-Latin spacing)
 ```
 
 All checked off — only then is the PPT qualified.

@@ -43,8 +43,14 @@ const MAP_RELATIONS = [
 Place in an additional `<style>` block in the generated page's `<head>` — do not modify the global base classes in `template-swiss.html`.
 
 ```html
-<link href="https://unpkg.com/maplibre-gl@5.14.0/dist/maplibre-gl.css" rel="stylesheet">
-<script src="https://unpkg.com/maplibre-gl@5.14.0/dist/maplibre-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+```
+
+> **Pin this version** — MapLibre v6 (pre-release) drops UMD support and requires `<script type="module">`. Stay on v5.x until your template migrates to ES modules.
+
+```html
+<!-- Additional <style> block in the generated page's <head> -->
 <style>
 .history-map-grid{display:grid;grid-template-columns:4.2fr 7.8fr;gap:2vw;flex:1;min-height:0;margin-top:2vh;align-items:stretch}
 .history-side{display:grid;grid-template-rows:1.08fr repeat(4,1fr);gap:1vh;min-height:0;height:100%}

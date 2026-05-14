@@ -373,18 +373,33 @@ Generates a semi-transparent highlight bar beneath the text. Dark themes use a b
 
 ## Motion Animation System
 
-The entire deck has page-entry animations enabled by default, powered by Motion One (vanilla version of Framer Motion, ~4KB).
+The entire deck has page-entry animations enabled by default, powered by Motion (vanilla version of Framer Motion, ~4KB).
+
+**Alternative:** GSAP (now 100% free after Webflow acquisition) offers SplitText and MorphSVG plugins. Consider only if those specific features are needed — Motion is lighter for this skill's use case.
 
 ### Loading Method
 
 The module script at the bottom of `assets/template.html` first tries the **local** `assets/motion.min.js`, falls back to **jsdelivr CDN** on failure, and if both fail, forces all elements with `data-anim` to `opacity:1` — content is always readable, presentations don't depend on network.
+
+### CSS @property Number Count-Up (Zero JS)
+
+For KPI/stat slides, CSS can animate integers natively (Baseline Jul 2024, all browsers):
+
+```css
+@property --num { syntax: '<integer>'; initial-value: 0; inherits: false; }
+.counter { transition: --num 2s ease-out; counter-reset: num var(--num); }
+.counter::after { content: counter(num); }
+.counter.active { --num: 1234; }
+```
+
+Use this for simple integer KPI reveals. For formatted numbers (commas, units), use the JS `countUp()` pattern in the template's `playSlide()`.
 
 ```js
 // Core loader in template (don't modify)
 let motion;
 try { motion = await import('./assets/motion.min.js'); }
 catch(e1) {
-  try { motion = await import('https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm'); }
+  try { motion = await import('https://cdn.jsdelivr.net/npm/motion@12.38.0/+esm'); }
   catch(e2) {
     document.querySelectorAll('[data-anim]').forEach(el=>{el.style.opacity='1';el.style.transform='none'});
   }
@@ -430,7 +445,7 @@ You only need to add two types of attributes in the HTML:
 - ✅ Each column in multi-column structures, so they fade in one by one instead of all at once
 - ❌ Don't add to containers (`.grid-6` / `.frame`), only add to leaf elements
 - ❌ Don't add to every `<li>` — adding at the `<ul>` level is usually sufficient
-- ❌ If a page shouldn't have any animation (e.g., transition pages), simply don't add `data-anim` — Motion One only targets marked elements
+- ❌ If a page shouldn't have any animation (e.g., transition pages), simply don't add `data-anim` — Motion only targets marked elements
 
 ### Common Issues
 

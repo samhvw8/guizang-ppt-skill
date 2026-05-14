@@ -159,3 +159,20 @@ This grey scale is a carefully calibrated "premium grey" that never competes wit
 ---
 
 After selecting a theme, tell the user: "Using 🔵 Klein Blue / 🟡 Lemon Yellow ..." and note it in the deck project record for consistency in future iterations.
+
+---
+
+## Future: OKLCH Color Tokens
+
+These presets use hex for maximum compatibility. OKLCH (~92% browser support) offers perceptually uniform colors — particularly useful for the Swiss accent colors which need precise high-chroma control:
+
+```css
+/* Example: IKB Klein Blue in OKLCH */
+--accent: oklch(0.35 0.18 264);
+/* P3 wide-gamut: higher chroma on capable displays */
+@media (color-gamut: p3) {
+  --accent: oklch(0.35 0.26 264);
+}
+```
+
+Track adoption at [caniuse.com/oklch](https://caniuse.com/mdn-css_types_color_oklch). Migration is optional — hex presets work perfectly.

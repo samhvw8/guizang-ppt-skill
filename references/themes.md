@@ -120,3 +120,21 @@
 - ❌ **Don't directly modify colors elsewhere in template.html** — all scattered rgba values use var, just change :root once
 
 After selecting a theme, tell the user in the skill conversation: "Using 🖋 Ink Classic / 🌊 Indigo Porcelain ..." and note it in the deck project record for consistency in future iterations.
+
+---
+
+## Future: OKLCH Color Tokens
+
+These theme presets use hex values for maximum compatibility. When browser support for OKLCH reaches 95%+ (currently ~92%), consider migrating to OKLCH for perceptually uniform colors and P3 wide-gamut progressive enhancement:
+
+```css
+/* Example: Ink Classic in OKLCH */
+--ink: oklch(0.07 0.01 0);
+--paper: oklch(0.95 0.01 80);
+/* P3 enhancement */
+@media (color-gamut: p3) {
+  --ink: oklch(0.07 0.015 0);
+}
+```
+
+This is not yet required — hex presets work perfectly. Track OKLCH adoption at [caniuse.com/oklch](https://caniuse.com/mdn-css_types_color_oklch).

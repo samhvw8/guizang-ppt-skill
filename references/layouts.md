@@ -62,9 +62,9 @@ Images should align with the body content area — do not default to aligning wi
 - Theme rhythm (whether each page uses light / dark / hero light / hero dark) has hard rules in the "Theme Rhythm Planning" section below — must read before generating
 - Both decisions must be made before choosing layouts to avoid rework
 
-### E. Animation System (Enabled by Default · Powered by Motion One)
+### E. Animation System (Enabled by Default · Powered by Motion)
 
-**Core mechanism**: The module script at the bottom of template.html triggers entrance animations on page change. All elements with `data-anim` are initially invisible; when the current page is reached, Motion One fades them in one by one.
+**Core mechanism**: The module script at the bottom of template.html triggers entrance animations on page change. All elements with `data-anim` are initially invisible; when the current page is reached, Motion fades them in one by one.
 
 **Animation strategy**: Add `data-animate="<recipe>"` on the `<section>` to choose the animation style; add `data-anim` to each element that needs an entrance animation (optionally with a value like `left` / `right` / `line` / `step`).
 
@@ -78,7 +78,9 @@ Images should align with the body content area — do not default to aligning wi
 
 **Graceful degradation**: If motion.min.js fails to load from both local and CDN, the script forces all `data-anim` elements to `opacity:1` — content is always readable.
 
-**Pages without animation**: To skip animation entirely on a page, simply do not add any `data-anim` — Motion One only affects marked elements.
+**View Transitions API** (Baseline 2025): For programmatic slide navigation (keyboard/button), wrap `scrollIntoView` in `document.startViewTransition()` for smooth animated transitions. Feature-detect with `if (document.startViewTransition)`. Native scroll-snap transitions do not need this.
+
+**Pages without animation**: To skip animation entirely on a page, simply do not add any `data-anim` — Motion only affects marked elements.
 
 ---
 
@@ -101,6 +103,7 @@ Images should align with the body content area — do not default to aligning wi
 - Non-hero pages should add `light` or `dark` theme; hero pages add `hero light` or `hero dark` (participates in WebGL theme interpolation)
 - `chrome` and `foot` are optional but recommended corner metadata
 - **Hero pages are for chapter covers / openers / closers / transitions**; non-hero pages are for body content
+- The slide container uses `scroll-snap-stop: always` to prevent fast-swipe from skipping slides, and `overscroll-behavior-x: contain` to prevent accidental page navigation.
 
 ### ⚠️ chrome and kicker Should Not Say the Same Thing
 

@@ -1,4 +1,4 @@
-# GPT-M 2.0 Image Prompt Templates
+# GPT Image 2 Image Prompt Templates
 
 Used for generating PPT illustrations in a Codex environment for this skill. Prompts should only set the tone — don't turn them into lengthy descriptions. First determine the image slot and aspect ratio, then choose the type.
 
@@ -14,6 +14,22 @@ Used for generating PPT illustrations in a Codex environment for this skill. Pro
 - Illustrations are assets embedded in a PPT, not standalone slides: do not generate headers, footers, page numbers, title bars, corner badges, credits, decorative borders, or slide chrome
 - After generation, save to `images/` with the naming pattern `{slide-number}-{semantic-label}.{ext}`
 
+## Model Selection Guide
+
+Choose the right model based on content type and language:
+
+| Content Type | Recommended Model | Why |
+|---|---|---|
+| Documentary/editorial photography | Midjourney V8+ (`--sref` for style lock) | Best aesthetic quality, cinematic realism |
+| Infographics (English labels) | GPT Image 2 | 99% text accuracy, reasoning-based layout |
+| Infographics (Chinese labels) | Qwen-Image 2.0 | 97%+ Chinese text accuracy, open-source |
+| Swiss flat graphics / diagrams | GPT Image 2 or Recraft V4 | GPT understands grid composition; Recraft outputs SVG |
+| Multi-image consistency | Midjourney V8 `--sref <code>` | Style reference codes lock visual identity across a set |
+
+**Style consistency tip**: Define a "style block" — a fixed text chunk describing medium, lighting, color palette, and atmosphere — and append it verbatim to every prompt in a deck. This forces visual coherence across all generated images.
+
+**Aspect ratio via API**: GPT Image 2 accepts custom dimensions (multiples of 16px, max ratio 3:1). For 21:9 banners, specify `2688×1152`. For 16:10, specify `1600×1000`.
+
 ## Aspect Ratio Selection
 
 | Use case | Recommended ratio | HTML slot |
@@ -27,7 +43,7 @@ Used for generating PPT illustrations in a Codex environment for this skill. Pro
 | Image grid | Uniform landscape | `.frame-img.h-22` / `.frame-img.h-26` |
 | Small panel group | Uniform landscape | `.frame-img.h-16` / `.frame-img.h-18` |
 
-For infographics and screenshot redesigns from uncontrollable source material, prefer `fit-contain` to avoid cropping text. When GPT-M 2.0 regenerates to fit a specific slot, it must match the slot's aspect ratio and fill the container — don't let a small image float in a white frame. For documentary photos, prefer the default `cover` to maintain visual tension.
+For infographics and screenshot redesigns from uncontrollable source material, prefer `fit-contain` to avoid cropping text. When GPT Image 2 regenerates to fit a specific slot, it must match the slot's aspect ratio and fill the container — don't let a small image float in a white frame. For documentary photos, prefer the default `cover` to maintain visual tension.
 
 ## Image Standardization Strategy
 
@@ -56,6 +72,8 @@ Append a spec constraint at the end of every image prompt:
 ```text
 Output must be a [16:9/16:10/4:3/3:2] landscape composition with the subject centered but with margins preserved, medium density, matching the same visual scale and margins as other images in the group. Keep only the core graphic/image itself — do not generate headers, footers, titles, page numbers, corner badges, credits, decorative borders, extra-long strips, portrait orientation, or irregular aspect ratios.
 ```
+
+GPT Image 2's reasoning mode pre-plans layouts before rendering — keep prompts concise and let the model reason about composition.
 
 When multiple images are needed on the same page, add:
 
@@ -123,7 +141,7 @@ Generate a landscape data poster visual. Key number: [number], meaning: [meaning
 
 ## Style B: Swiss International Style Image Rules
 
-When the deck uses `assets/template-swiss.html` / `layouts-swiss.md`, prefer the prompt templates below. They pair with GPT-M 2.0 and are designed to generate images that drop directly into the raw layout slots — especially the S22 top banner and S15/S16 multi-image grids.
+When the deck uses `assets/template-swiss.html` / `layouts-swiss.md`, prefer the prompt templates below. They pair with GPT Image 2 and are designed to generate images that drop directly into the raw layout slots — especially the S22 top banner and S15/S16 multi-image grids.
 
 ### Swiss Image Hard Rules
 

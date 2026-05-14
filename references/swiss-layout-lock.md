@@ -74,7 +74,7 @@ When generating Swiss-themed slides, only the 22 registered layouts listed below
 - Image cells must snap to the original card grid; do not let images determine their own dimensions.
 - If images are regenerated per-slot as `s15-grid-21x9` / `s16-brief-21x9`, the container must use `.frame-img.r-21x9` to fill the slot. Do not add `.fit-contain`, and do not use fixed `height:18vh` or similar short-slot values that shrink wide images.
 - `.fit-contain` is only for user screenshots or text-dense images that must preserve their original aspect ratio. Once you decide to regenerate an image, generate it at the slot's aspect ratio and fill the slot.
-- If the original screenshot has an uncontrollable aspect ratio, first use GPT-M 2.0 to regenerate a "screenshot redesign," then insert it into the fixed slot.
+- If the original screenshot has an uncontrollable aspect ratio, first use GPT Image 2 to regenerate a "screenshot redesign," then insert it into the fixed slot.
 
 ## Prohibited List
 
