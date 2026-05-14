@@ -1,23 +1,23 @@
-# 瑞士国际主义风格 · 主题色预设（Swiss Themes）
+# Swiss International Style · Theme Color Presets (Swiss Themes)
 
-4 套基于瑞士国际主义风格（Swiss Style）的高反差配色。**每套都遵循"高级灰白底 + 单一高饱和高亮色"的极简原则**——这是瑞士风的灵魂,不允许混搭多个高亮色。
-
----
-
-## 使用方法
-
-1. 问用户选哪套（或基于内容推荐一套）
-2. 打开 `assets/template-swiss.html` 的 `<style>` 块
-3. 找到开头的 `:root{` 块
-4. **整体替换**标有"主题色"注释的所有变量：`--paper` / `--paper-rgb` / `--ink` / `--ink-rgb` / `--grey-1` / `--grey-2` / `--grey-3` / `--accent` / `--accent-rgb` / `--accent-on`
-5. 其他 CSS 都走 `var(--...)`,无需任何其他改动
+4 high-contrast color schemes based on Swiss International Typographic Style. **Each follows the "premium neutral base + single high-saturation accent" minimalist principle** — this is the soul of Swiss Style, and mixing multiple accent colors is not allowed.
 
 ---
 
-## 🔵 克莱因蓝 (IKB · International Klein Blue)
+## How to Use
 
-**适合**：通用场合、商业发布、AI/科技产品、设计领域分享。最经典的瑞士风配色,绝不出错。
-**调性**：纯白底 + IKB 克莱因蓝,极致冷静、理性、有学术感,像 Helvetica Forever 或 Massimo Vignelli 的作品集。
+1. Ask the user which theme to use (or recommend one based on content)
+2. Open the `<style>` block in `assets/template-swiss.html`
+3. Find the `:root{` block at the top
+4. **Replace all** variables marked with "theme color" comments: `--paper` / `--paper-rgb` / `--ink` / `--ink-rgb` / `--grey-1` / `--grey-2` / `--grey-3` / `--accent` / `--accent-rgb` / `--accent-on`
+5. All other CSS uses `var(--...)`, so no other changes are needed
+
+---
+
+## 🔵 Klein Blue (IKB · International Klein Blue)
+
+**Best for**: General-purpose, business launches, AI/tech products, design-focused presentations. The most classic Swiss Style palette — never goes wrong.
+**Tone**: Pure white base + IKB Klein Blue, supremely calm, rational, and academic — like a Helvetica Forever exhibition or a Massimo Vignelli portfolio.
 
 ```css
 --paper:#fafaf8;
@@ -32,17 +32,17 @@
 --accent-on:#ffffff;
 ```
 
-**使用要点**：
-- IKB 是高饱和深蓝,在大色块（如 `.accent-block`）上极有视觉冲击
-- KPI 数字加 `.accent` 类用蓝色,但不要满屏蓝——IKB 一旦泛滥就掉档
-- 推荐配合 `dark` 主题页交替使用,黑底高亮 IKB 同样高级
+**Usage tips**:
+- IKB is a high-saturation deep blue — it creates powerful visual impact on large color blocks (e.g., `.accent-block`)
+- Use the `.accent` class for KPI numbers in blue, but don't overdo it — IKB loses its prestige when overused
+- Recommended to alternate with `dark` theme pages — IKB on a dark background looks equally premium
 
 ---
 
-## 🟡 柠檬黄 (Lemon · Cadmium Yellow)
+## 🟡 Lemon Yellow (Lemon · Cadmium Yellow)
 
-**适合**：年轻、运动、零售、消费品、活力主题、Y2K 复古设计。
-**调性**：浅米白底 + 柠檬黄,鲜亮、有活力、警示感强,像 IKEA 或 Beck Design 的视觉语言。
+**Best for**: Youth, sports, retail, consumer goods, energetic themes, Y2K retro design.
+**Tone**: Light off-white base + lemon yellow, vivid, energetic, with a strong alerting quality — like the visual language of IKEA or Beck Design.
 
 ```css
 --paper:#fafaf8;
@@ -57,17 +57,17 @@
 --accent-on:#0a0a0a;
 ```
 
-**使用要点**：
-- 柠檬黄属于浅色高饱和,**`.accent-on` 必须用纯黑**（不是白）才能保证可读性
-- 黄色色块上不要放白字——会糊掉
-- 柠檬黄做单字符高亮（`.mark` / `.underline-accent`）效果最强
+**Usage tips**:
+- Lemon yellow is a light high-saturation color — **`.accent-on` must use pure black** (not white) to ensure readability
+- Don't put white text on yellow blocks — it will be illegible
+- Lemon yellow works best as single-character highlights (`.mark` / `.underline-accent`)
 
 ---
 
-## 🟢 柠檬绿 (Lemon Green · Highlighter Green)
+## 🟢 Lemon Green (Lemon Green · Highlighter Green)
 
-**适合**：生态、可持续、健康、新兴科技、Z 世代品牌、AI 创业项目。
-**调性**：浅米白底 + 荧光柠檬绿,有未来感、年轻、当代,像 Acne Studios 或 Off-White 的视觉。
+**Best for**: Eco, sustainability, health, emerging tech, Gen Z brands, AI startup projects.
+**Tone**: Light off-white base + fluorescent lemon green, futuristic, youthful, contemporary — like the visual identity of Acne Studios or Off-White.
 
 ```css
 --paper:#fafaf8;
@@ -82,17 +82,17 @@
 --accent-on:#0a0a0a;
 ```
 
-**使用要点**：
-- 荧光绿和黄色一样属于浅色,**`.accent-on` 必须用纯黑**
-- 屏幕显色比印刷漂亮,适合演讲投影场景
-- 推荐用于"新兴技术"、"未来"主题
+**Usage tips**:
+- Fluorescent green, like yellow, is a light color — **`.accent-on` must use pure black**
+- Screen rendering looks better than print — ideal for presentation projection
+- Recommended for "emerging technology" and "future" themes
 
 ---
 
-## 🟠 安全橙 (Safety Orange)
+## 🟠 Safety Orange (Safety Orange)
 
-**适合**：工业、警示、运动、施工、汽车工业、技术发布会的"警告/重点"页。
-**调性**：浅米白底 + 安全橙,工业感、紧迫感、视觉锚点感,像 Saul Bass 海报或 Highway Gothic 标识系统。
+**Best for**: Industrial, warning, sports, construction, automotive industry, "alert/highlight" pages in tech launch events.
+**Tone**: Light off-white base + safety orange, industrial feel, sense of urgency, visual anchor — like a Saul Bass poster or the Highway Gothic signage system.
 
 ```css
 --paper:#fafaf8;
@@ -107,55 +107,55 @@
 --accent-on:#ffffff;
 ```
 
-**使用要点**：
-- 橙色介于浅色和深色之间,**白字勉强能读但建议加粗**（`font-weight:600` 以上）
-- 工业感强,适合涉及"警告"、"决策"、"转折点"的内容
-- 不建议整页 `.accent` 模式,橙色满屏会过于刺眼,做局部高亮即可
+**Usage tips**:
+- Orange sits between light and dark — **white text is barely readable, so use bold** (`font-weight:600` or above)
+- Strong industrial feel — suits content involving "warnings", "decisions", or "turning points"
+- Avoid full-page `.accent` mode — an entire screen of orange is too glaring; use it for local highlights only
 
 ---
 
-## 推荐选择参考
+## Recommended Selection Guide
 
-| 如果是... | 推荐主题 |
+| If it's about... | Recommended theme |
 |---|---|
-| 不知道选啥 / 第一次用 / AI/科技/设计 | 🔵 克莱因蓝 |
-| 年轻、活力、消费、零售 | 🟡 柠檬黄 |
-| 生态、未来、Z 世代、新兴 | 🟢 柠檬绿 |
-| 工业、警示、汽车、紧迫感 | 🟠 安全橙 |
+| Not sure / first time / AI / tech / design | 🔵 Klein Blue |
+| Youth, energy, consumer, retail | 🟡 Lemon Yellow |
+| Eco, future, Gen Z, emerging | 🟢 Lemon Green |
+| Industrial, warning, automotive, urgency | 🟠 Safety Orange |
 
 ---
 
-## 切换原则
+## Switching Principles
 
-- **一份 deck 只用一套主题**,不要中途换 accent 色
-- 灰阶变量（`--grey-1/2/3`）在 4 套主题里完全相同,无需调整
-- WebGL 网格背景会自动读取 `--accent` 变量,翻页时鼠标附近会偷渡一抹高亮色
-- 选定主题后,可以在 chrome 文案里用一个相关词强化语义（如 IKB 配 `International / Helvetica` ,柠檬黄配 `Active / Living`）
-
----
-
-## ❌ 不要做的事
-
-- ❌ **不允许混搭**（例如 IKB 蓝 + 柠檬黄同时出现作高亮）——彻底违反瑞士风"单一锚点色"原则
-- ❌ **不允许用户自定义任意 hex 值**——委婉拒绝,展示 4 套预设让选
-- ❌ **不要改灰阶变量**——`--paper` / `--grey-1/2/3` / `--ink` 跨主题统一,只换 accent
-- ❌ **不要用渐变**——瑞士风拒绝任何渐变,所有色块必须纯色
-- ❌ **不要给 accent 加阴影 / 圆角 / 透明度**——直角、纯色、不透明,这是瑞士风的硬规则
+- **Use only one theme per deck** — don't switch accent colors midway
+- The grey-scale variables (`--grey-1/2/3`) are identical across all 4 themes — no adjustment needed
+- The WebGL grid background automatically reads the `--accent` variable and subtly reveals the accent color near the cursor during page transitions
+- After selecting a theme, you can reinforce the semantic feel by using a related word in the chrome copy (e.g., IKB pairs with `International / Helvetica`, Lemon Yellow pairs with `Active / Living`)
 
 ---
 
-## 关于灰阶（跨主题统一）
+## ❌ Don'ts
 
-| 变量 | 值 | 用途 |
+- ❌ **No mixing** (e.g., IKB blue + Lemon Yellow appearing simultaneously as highlights) — this completely violates the Swiss Style "single anchor color" principle
+- ❌ **No custom hex values** — politely decline and present the 4 presets for selection
+- ❌ **Don't change the grey-scale variables** — `--paper` / `--grey-1/2/3` / `--ink` are unified across themes; only swap the accent
+- ❌ **No gradients** — Swiss Style rejects all gradients; every color block must be solid
+- ❌ **No shadows / rounded corners / opacity on accent** — sharp corners, solid color, fully opaque — this is a hard rule of Swiss Style
+
+---
+
+## About the Grey Scale (Unified Across Themes)
+
+| Variable | Value | Purpose |
 |---|---|---|
-| `--paper` | `#fafaf8` | 主底色（极浅暖白） |
-| `--grey-1` | `#f0f0ee` | 浅灰底（用于 `.grey-block` / 区块底） |
-| `--grey-2` | `#d4d4d2` | 中灰（分割线、border） |
-| `--grey-3` | `#737373` | 暗灰（辅助文字 / meta） |
-| `--ink` | `#0a0a0a` | 文字主色（近黑） |
+| `--paper` | `#fafaf8` | Main background (very light warm white) |
+| `--grey-1` | `#f0f0ee` | Light grey background (for `.grey-block` / section backgrounds) |
+| `--grey-2` | `#d4d4d2` | Medium grey (dividers, borders) |
+| `--grey-3` | `#737373` | Dark grey (secondary text / meta) |
+| `--ink` | `#0a0a0a` | Primary text color (near-black) |
 
-这套灰阶是经过校色的"高级灰",在任何 accent 色下都不抢戏。**不要**改成纯白（`#fff`）或纯黑（`#000`）——会损失瑞士风的"克制"质感。
+This grey scale is a carefully calibrated "premium grey" that never competes with any accent color. **Do not** change it to pure white (`#fff`) or pure black (`#000`) — that would lose the "restrained" quality of Swiss Style.
 
 ---
 
-选定主题后,告诉用户："用 🔵 克莱因蓝 / 🟡 柠檬黄 ..." 并在 deck 项目记录里备注,方便后续迭代时保持一致。
+After selecting a theme, tell the user: "Using 🔵 Klein Blue / 🟡 Lemon Yellow ..." and note it in the deck project record for consistency in future iterations.

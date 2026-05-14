@@ -1,86 +1,86 @@
 # Swiss Layout Lock
 
-本文件是瑞士主题的硬约束。它的目的不是增加灵感,而是防止生成时“看起来像 Swiss,但已经脱离原始模板”。
+This file contains hard constraints for the Swiss theme. Its purpose is not to add inspiration, but to prevent generated output from "looking Swiss but having drifted from the original template."
 
 ## Golden Source
 
-原始参考文件:
+Original reference file:
 
 `/Users/guohao/Documents/op7418的仓库/项目/Thin-Harness-Fat-Skills/ppt/index.html`
 
-瑞士主题生成时,除用户明确要求实验版式外,只能从下面登记的 22 个版式中选择。新增首页/尾页可以使用 Skill 里的 IKB ASCII 版本,但正文页必须来自这 22 个版式。
+When generating Swiss-themed slides, only the 22 registered layouts listed below may be used — unless the user explicitly requests an experimental layout. Cover/closing pages may use the IKB ASCII version from the Skill, but body pages must come from these 22 layouts.
 
-## 生成前硬规则
+## Hard Rules Before Generation
 
-1. 每个正文页都必须先选一个登记版式,并在 `<section>` 上写 `data-layout="Sxx"`。
-2. 不允许临时发明 `P23/P24` 这类未出现在原始 22P 的正文结构。需要图片时,优先使用 `S22 Image Hero`;多图时使用 `S15/S16` 的原始网格骨架做图片格改造,不要发明新的证据墙。唯一登记的交互扩展是 `S08 + Swiss Map Component`,详见 `references/swiss-map-component.md`。
-3. 顶部中文标题默认左对齐并贴近左上内容轴。除原始 `S03/S09/S10` 这种 statement/split 版式外,不要把大标题放到页面水平中心。
-4. SVG 只能负责几何线条、圆、箭头、路径。不要在 SVG 里写可见文字;所有文字标签用 HTML 放在网格、卡片或 caption 里。
-5. 图片槽位和图片生成比例必须绑定。先确定版式和槽位,再生成图片。
+1. Every body page must first select a registered layout and include `data-layout="Sxx"` on its `<section>`.
+2. Do not invent ad-hoc body structures like `P23/P24` that do not appear in the original 22P set. When images are needed, prefer `S22 Image Hero`; for multiple images, adapt the original grid skeleton of `S15/S16` into image cells — do not invent a new evidence wall. The only registered interactive extension is `S08 + Swiss Map Component`; see `references/swiss-map-component.md` for details.
+3. Top Chinese titles default to left-aligned, hugging the upper-left content axis. Do not center-align large titles horizontally — except in the original `S03/S09/S10` statement/split layouts.
+4. SVG may only contain geometric lines, circles, arrows, and paths. Do not place visible text inside SVG; all text labels must be placed in HTML within grids, cards, or captions.
+5. Image slots and image generation aspect ratios must be bound together. Determine the layout and slot first, then generate the image.
 
-## 登记版式
+## Registered Layouts
 
-| ID | 原始页 | 名称 | 必须保留的骨架 | 图片规则 |
+| ID | Original Page | Name | Required Skeleton | Image Rules |
 |---|---:|---|---|---|
-| S01 | 01 | Index Cover | 三行 `cover-row`,左大编号,右大标题 | 无 |
-| S02 | 02 | Vertical Timeline + KPI | 顶部左对齐标题,中部 `.timeline-v`,底部 `.kpi-row-4` | 无 |
-| S03 | 03 | Split Statement | `.slide.split` 双半屏,左巨字,右灰底解释 | 无 |
-| S04 | 04 | Six Cells | 顶部左对齐标题,下方 `.sub-grid-3-2` 六卡 | 可把卡片内部换成小图标,不放大图 |
-| S05 | 05 | Three Layers | 顶部左对齐标题,下方 `.stack-row` 三大块 | 无 |
-| S06 | 06 | KPI Tower | 左标题+右说明,下方不等高 KPI 塔 | 无 |
-| S07 | 07 | Horizontal Bar | 左对齐标题,横向条形图 | 无 |
-| S08 | 08 | Duo Compare | `.duo-compare` 两列 + 中线 | 无;地点/路线内容可使用 `S08 + Swiss Map Component` 替换右侧插槽 |
-| S09 | 09 | Dot Matrix Statement | 大号 statement + 点阵装饰 | 无 |
-| S10 | 10 | Split Closing | `.slide.split` 左巨字右列表 | 无 |
-| S11 | 11 | Horizontal Timeline | 原始 `grid-template-columns:auto 1fr` 头部 + `.timeline-h` | 无 |
-| S12 | 12 | Manifesto + Ink Banner | 大字 statement + 底部通栏 ink 条 | 无 |
-| S13 | 13 | Three Forces | 左 ink hero 块 + 右 3 张卡 | 无 |
-| S14 | 14 | Loop Form | 左 4 步列表 + 右几何 loop | SVG 禁止文字,标签改 HTML |
-| S15 | 15 | Matrix + Hero Stat | 顶部左对齐标题,中段 6×2 矩阵,底部巨数 | 多图可改造矩阵格,同组统一 `21:9` |
-| S16 | 16 | Multi-card Brief | 顶部左对齐标题,下方 3×2 微卡 | 多图可改造卡片内容,同组统一 `21:9` |
-| S17 | 17 | System Diagram | 顶部左小标题+右段落,中部几何系统图,底部三列解释 | SVG 禁止文字,标签改 HTML |
-| S18 | 18 | Why Now | 三列递进 + 底部巨数 | 无 |
-| S19 | 19 | Four Cards | 顶部蓝线 + 四列均分 | 无 |
-| S20 | 20 | Stacked KPI Ledger | 纵向账单式巨数 | 无 |
-| S21 | 21 | Tech Spec Sheet | 大标题 + 三 KPI + 右下竖线矩阵 | 无 |
-| S22 | 22 | Image Hero | 顶部全宽图 + 左上白块标题 + 下方三列 KPI | 主图按 `21:9` 生成,关键主体放中央安全区 |
+| S01 | 01 | Index Cover | Three `cover-row` rows; large number on the left, large title on the right | None |
+| S02 | 02 | Vertical Timeline + KPI | Left-aligned title at top, `.timeline-v` in the middle, `.kpi-row-4` at the bottom | None |
+| S03 | 03 | Split Statement | `.slide.split` dual half-screen; large text on the left, gray-background explanation on the right | None |
+| S04 | 04 | Six Cells | Left-aligned title at top, `.sub-grid-3-2` six cards below | Cards may contain small icons internally; no large images |
+| S05 | 05 | Three Layers | Left-aligned title at top, `.stack-row` three large blocks below | None |
+| S06 | 06 | KPI Tower | Title on the left + description on the right, unequal-height KPI tower below | None |
+| S07 | 07 | Horizontal Bar | Left-aligned title, horizontal bar chart | None |
+| S08 | 08 | Duo Compare | `.duo-compare` two columns + center divider | None; location/route content may use `S08 + Swiss Map Component` to replace the right-side slot |
+| S09 | 09 | Dot Matrix Statement | Large statement + dot-matrix decoration | None |
+| S10 | 10 | Split Closing | `.slide.split` large text on the left, list on the right | None |
+| S11 | 11 | Horizontal Timeline | Original `grid-template-columns:auto 1fr` header + `.timeline-h` | None |
+| S12 | 12 | Manifesto + Ink Banner | Large statement + full-width ink banner at the bottom | None |
+| S13 | 13 | Three Forces | Ink hero block on the left + 3 cards on the right | None |
+| S14 | 14 | Loop Form | 4-step list on the left + geometric loop on the right | SVG must not contain text; labels must be HTML |
+| S15 | 15 | Matrix + Hero Stat | Left-aligned title at top, 6×2 matrix in the middle, large number at the bottom | Multiple images may adapt the matrix cells; use uniform `21:9` within the same group |
+| S16 | 16 | Multi-card Brief | Left-aligned title at top, 3×2 micro-cards below | Multiple images may adapt card content; use uniform `21:9` within the same group |
+| S17 | 17 | System Diagram | Small title on the left + paragraph on the right at top, geometric system diagram in the middle, three-column explanation at the bottom | SVG must not contain text; labels must be HTML |
+| S18 | 18 | Why Now | Three progressive columns + large number at the bottom | None |
+| S19 | 19 | Four Cards | Blue line at top + four equal-width columns | None |
+| S20 | 20 | Stacked KPI Ledger | Vertical ledger-style large numbers | None |
+| S21 | 21 | Tech Spec Sheet | Large title + three KPIs + vertical-line matrix at bottom-right | None |
+| S22 | 22 | Image Hero | Full-width image at top + white-block title at upper-left + three-column KPI below | Main image generated at `21:9`; key subject placed in the center safe zone |
 
-## 登记扩展组件
+## Registered Extension Components
 
 ### S08 + Swiss Map Component
 
-- 使用场景:地理、历史、城市路线、门店/校区/事件点位、人物住所关系。
-- 版式身份:仍是 `data-layout="S08"`,不是新正文页。
-- 页面结构:顶部左对齐标题 + 左侧关系/说明卡片 + 右侧 MapLibre 地图卡片。
-- 标记结构:点 + 连线 + HTML 卡片;SVG 只画 fallback 关系线,不写文字。
-- 交互控制:右上角必须有 `+` / `-` / `DRAG`;默认禁用滚轮缩放和拖动,避免触发 PPT 翻页。
-- 详细代码和数据契约见 `references/swiss-map-component.md`。
+- Use cases: geography, history, city routes, store/campus/event locations, residential relationships of historical figures.
+- Layout identity: still `data-layout="S08"` — not a new body page.
+- Page structure: left-aligned title at top + relationship/description cards on the left + MapLibre map card on the right.
+- Marker structure: dots + connector lines + HTML cards; SVG only draws fallback relationship lines — no text.
+- Interaction controls: `+` / `-` / `DRAG` buttons must appear at the upper right; scroll-wheel zoom and drag are disabled by default to avoid triggering PPT page navigation.
+- See `references/swiss-map-component.md` for detailed code and data contracts.
 
-## 图片槽位规则
+## Image Slot Rules
 
 ### S22 · Hero Strip
 
-- 生成比例: `21:9`
-- 图片用途:实拍场景、产品场景、UI 情景图。
-- 生成提示词必须包含: `21:9 ultra-wide strip`, `subject centered in the safe middle area`, `no title, no footer, no page chrome, no logo, no border`.
-- HTML 容器必须使用原始 S22 的顶部全宽图骨架;不要改成普通居中大图。
-- 照片用 `object-fit:cover;object-position:center 35%`。如果是人像/会议场景,不要用 `top center`。
-- 信息图/UI 截图如果放 S22,必须重新生成接近 `21:9`,并用 `object-fit:contain` 或保证核心内容在中央 70% 安全区。
+- Aspect ratio: `21:9`
+- Image use: real-world scenes, product scenes, UI scenario images.
+- Generation prompt must include: `21:9 ultra-wide strip`, `subject centered in the safe middle area`, `no title, no footer, no page chrome, no logo, no border`.
+- HTML container must use the original S22 full-width image skeleton at the top; do not replace it with a generic centered large image.
+- Photos use `object-fit:cover;object-position:center 35%`. Do not use `top center` for portrait/conference scenes.
+- Infographics/UI screenshots placed in S22 must be regenerated close to `21:9` and use `object-fit:contain`, or ensure core content falls within the central 70% safe zone.
 
 ### S15/S16 · Multi Image Grid
 
-- 生成比例:统一 `21:9` 或统一 `16:10`,不要混用。
-- 同一组图片必须同高、同宽、同一容器背景。
-- 图片格必须吸附原始卡片网格,不要让图片自己决定宽高。
-- 如果图片是按槽位重新生成的 `s15-grid-21x9` / `s16-brief-21x9`,容器必须用 `.frame-img.r-21x9` 铺满槽位,不要再加 `.fit-contain`,也不要用固定 `height:18vh` 这类短槽把长图缩小。
-- `.fit-contain` 只用于必须保留原始比例的用户截图或文字密集图片;一旦决定重生成图片,就应该按槽位比例重生成并铺满。
-- 如果原始截图比例不可控,先用 GPT-M 2.0 重生成“截图再设计”,再插入固定槽位。
+- Aspect ratio: use uniform `21:9` or uniform `16:10` — do not mix ratios.
+- All images in the same group must have identical height, width, and container background.
+- Image cells must snap to the original card grid; do not let images determine their own dimensions.
+- If images are regenerated per-slot as `s15-grid-21x9` / `s16-brief-21x9`, the container must use `.frame-img.r-21x9` to fill the slot. Do not add `.fit-contain`, and do not use fixed `height:18vh` or similar short-slot values that shrink wide images.
+- `.fit-contain` is only for user screenshots or text-dense images that must preserve their original aspect ratio. Once you decide to regenerate an image, generate it at the slot's aspect ratio and fill the slot.
+- If the original screenshot has an uncontrollable aspect ratio, first use GPT-M 2.0 to regenerate a "screenshot redesign," then insert it into the fixed slot.
 
-## 禁止清单
+## Prohibited List
 
-- 禁止 `text-align:center` 用在顶部中文大标题。
-- 禁止将顶部标题写进右侧 7.8fr 栏,造成视觉居中。
-- 禁止未登记正文页:例如临时 `Swiss Image Split`、`Evidence Grid`、三圆图自绘页。
-- 禁止图片容器灰底包白底信息图。
-- 禁止 SVG 中出现 `<text>` 作为可见标签。
-- 禁止图片默认 `object-position:top center` 用于照片。
+- Do not use `text-align:center` on top Chinese titles.
+- Do not place the top title inside the right `7.8fr` column, creating a visual center alignment.
+- Do not use unregistered body pages — e.g., ad-hoc `Swiss Image Split`, `Evidence Grid`, or self-drawn three-circle diagram pages.
+- Do not place a gray-background image container around a white-background infographic.
+- Do not use `<text>` inside SVG as visible labels.
+- Do not default to `object-position:top center` for photos.

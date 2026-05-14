@@ -1,270 +1,270 @@
-# 组件参考 · Components
+# Component Reference · Components
 
-这是 `guizang-ppt-skill` skill 的组件手册。template.html 已经定义好了所有样式，这里只写"这个组件长什么样、怎么用"。
+This is the component manual for the `guizang-ppt-skill` skill. template.html already defines all styles — this document only describes "what each component looks like and how to use it."
 
-## 目录
+## Table of Contents
 
-- [基础 Slide 外壳](#基础-slide-外壳)
-- [字体 Typography](#字体-typography)
+- [Basic Slide Shell](#basic-slide-shell)
+- [Typography](#typography)
 - [Chrome & Foot](#chrome--foot)
-- [Callout 引用框](#callout-引用框)
-- [Stat 数字矩阵](#stat-数字矩阵)
-- [Platform 平台卡](#platform-平台卡)
-- [Rowline 表格行](#rowline-表格行)
-- [Pillar 支柱卡](#pillar-支柱卡)
+- [Callout Quote Box](#callout-quote-box)
+- [Stat Number Matrix](#stat-number-matrix)
+- [Platform Card](#platform-card)
+- [Rowline Table Row](#rowline-table-row)
+- [Pillar Card](#pillar-card)
 - [Tag & Kicker](#tag--kicker)
-- [Figure 图片框](#figure-图片框)
-- [Icons 图标](#icons-图标)
-- [Ghost 巨型背景字](#ghost-巨型背景字)
-- [Highlight 荧光标记](#highlight-荧光标记)
-- [Motion 动效系统](#motion-动效系统)
+- [Figure Image Frame](#figure-image-frame)
+- [Icons](#icons)
+- [Ghost Giant Background Text](#ghost-giant-background-text)
+- [Highlight Marker](#highlight-marker)
+- [Motion Animation System](#motion-animation-system)
 
 ---
 
-## 基础 Slide 外壳
+## Basic Slide Shell
 
-每一页都是一个 `<section class="slide ...">`。必须包含 `data-theme` 属性（`light` 或 `dark`），JS 翻页时会根据这个属性切换背景。
+Every page is a `<section class="slide ...">`. It must include a `data-theme` attribute (`light` or `dark`) — the JS page transition will switch backgrounds based on this attribute.
 
 ```html
-<section class="slide light" data-theme="light">   <!-- 浅色页 -->
-<section class="slide dark" data-theme="dark">     <!-- 深色页 -->
-<section class="slide light hero" data-theme="light">  <!-- Hero 页：浅色 + 薄遮罩透出 WebGL -->
-<section class="slide dark hero" data-theme="dark">    <!-- Hero 页：深色 + 薄遮罩 -->
+<section class="slide light" data-theme="light">   <!-- Light page -->
+<section class="slide dark" data-theme="dark">     <!-- Dark page -->
+<section class="slide light hero" data-theme="light">  <!-- Hero page: light + thin overlay showing WebGL -->
+<section class="slide dark hero" data-theme="dark">    <!-- Hero page: dark + thin overlay -->
 ```
 
-**light vs dark 的使用：交替使用**，每 2-3 页切换一次主题，避免连续超过 3 页同色。翻页时 WebGL 背景会自动在两个 shader 之间渐变过渡。
+**light vs dark usage: alternate between them**, switching every 2-3 pages to avoid more than 3 consecutive pages of the same color. During page transitions, the WebGL background will automatically crossfade between two shaders.
 
-**hero 类的使用**：只给视觉主导的页面加（封面、金句页、章节过渡、结尾）。加 `hero` 后遮罩降到 12-16%，WebGL 背景会大幅透出，所以不要在 hero 页上放太多文字。
+**hero class usage**: Only add to visually dominant pages (cover, key quote, chapter transitions, closing). Adding `hero` reduces the overlay to 12-16%, letting the WebGL background show through prominently — so don't put too much text on hero pages.
 
 ---
 
-## 字体 Typography
+## Typography
 
-字体分工是本模板最重要的规则，严禁混用。
+Font assignment is the most important rule of this template — mixing is strictly forbidden.
 
-| Class | 用途 | 字体 |
+| Class | Purpose | Font |
 |---|---|---|
-| `.display` | 超大号英文（Hero 页） | Playfair Display 700, 11vw |
-| `.display-zh` | 超大号中文标题 | Noto Serif SC 700, 7.8vw |
-| `.h1-zh` | 页面主标题 | Noto Serif SC 700, 4.6vw |
-| `.h2-zh` | 副标题 | Noto Serif SC 600, 3.2vw |
-| `.h3-zh` | 流水线步骤标题 | Noto Serif SC 500, 1.9vw |
-| `.lead` | 引导段（比 body 大） | Noto Serif SC 400, 1.9vw |
-| `.body-zh` | **正文/描述（非衬线）** | Noto Sans SC 400, 1.22vw |
-| `.body-serif` | 正文（衬线） | Noto Serif SC 400, 1.3vw |
-| `.kicker` | 小节提示（标题上方） | IBM Plex Mono, 12px uppercase |
-| `.meta` | 元信息标签 | IBM Plex Mono, 0.88vw uppercase |
-| `.big-num` | 巨型数字 | Playfair Display 800, 10vw |
-| `.mid-num` | 中号数字 | Playfair Display 700, 5.5vw |
+| `.display` | Extra-large English text (Hero pages) | Playfair Display 700, 11vw |
+| `.display-zh` | Extra-large Chinese titles | Noto Serif SC 700, 7.8vw |
+| `.h1-zh` | Page main title | Noto Serif SC 700, 4.6vw |
+| `.h2-zh` | Subtitle | Noto Serif SC 600, 3.2vw |
+| `.h3-zh` | Pipeline step titles | Noto Serif SC 500, 1.9vw |
+| `.lead` | Lead paragraph (larger than body) | Noto Serif SC 400, 1.9vw |
+| `.body-zh` | **Body text/descriptions (sans-serif)** | Noto Sans SC 400, 1.22vw |
+| `.body-serif` | Body text (serif) | Noto Serif SC 400, 1.3vw |
+| `.kicker` | Section hint (above title) | IBM Plex Mono, 12px uppercase |
+| `.meta` | Metadata labels | IBM Plex Mono, 0.88vw uppercase |
+| `.big-num` | Giant numbers | Playfair Display 800, 10vw |
+| `.mid-num` | Medium numbers | Playfair Display 700, 5.5vw |
 
-**核心规则**：
-- **衬线**（`serif-zh` / `serif-en`）：标题、重点金句、数字 —— 用于"视觉重音"
-- **非衬线**（`sans-zh`）：正文描述、大段阅读内容 —— 用于"信息密度"
-- **等宽**（`mono`）：kicker、meta、foot 的英文标签 —— 用于"装饰节奏"
+**Core rules**:
+- **Serif** (`serif-zh` / `serif-en`): Titles, key quotes, numbers — used for "visual emphasis"
+- **Sans-serif** (`sans-zh`): Body descriptions, long-form reading — used for "information density"
+- **Monospace** (`mono`): kicker, meta, foot English labels — used for "decorative rhythm"
 
-**强调技巧**：
-- `<em class="en">英文词</em>` —— 把英文词渲染成 Playfair Display 斜体（很好看）
-- `<em style="opacity:.65">短语</em>` —— 让标题后半段淡出，制造节奏
+**Emphasis techniques**:
+- `<em class="en">English word</em>` — renders the English word in Playfair Display italic (looks great)
+- `<em style="opacity:.65">phrase</em>` — fades the latter half of a title, creating rhythm
 
 ---
 
 ## Chrome & Foot
 
-每一页的顶部和底部的元信息条。几乎所有页都应该有。
+The metadata bars at the top and bottom of each page. Almost all pages should have them.
 
 ```html
 <div class="chrome">
   <div class="left">
-    <span>第一幕 · 硬数据</span>
+    <span>Act One · Hard Data</span>
     <span class="sep"></span>
     <span>Act I</span>
   </div>
   <div class="right"><span>02 / 27</span></div>
 </div>
 
-<!-- ... 页面主体 ... -->
+<!-- ... page body ... -->
 
 <div class="foot">
-  <div class="title">项目名 · CodePilot　|　github.com/codepilot</div>
+  <div class="title">Project Name · CodePilot　|　github.com/codepilot</div>
   <div>Act I · Dev Numbers</div>
 </div>
 ```
 
-**规则**：
-- `chrome.right` 总是放页码 `NN / TOTAL` （TOTAL 为总页数）
-- `foot.title` 是中文说明，`foot.right` 是英文 act 标记
-- chrome 和 foot 共同构成杂志感的"页眉页脚"
+**Rules**:
+- `chrome.right` always shows page number `NN / TOTAL` (TOTAL is the total page count)
+- `foot.title` is the Chinese description, `foot.right` is the English act label
+- chrome and foot together form the magazine-style "header and footer"
 
 ---
 
-## Callout 引用框
+## Callout Quote Box
 
-展示金句 / 关键观点 / 他人引言。
+For displaying key quotes / core points / attributed quotations.
 
 ```html
 <div class="callout" style="max-width:80vw">
-  <div class="q-big">"这东西在三年前，<br>需要一个十人团队做一年。"</div>
-  <span class="cite">— 一个观察者的判断</span>
+  <div class="q-big">"Three years ago, this would have<br>taken a team of ten an entire year."</div>
+  <span class="cite">— An observer's assessment</span>
 </div>
 ```
 
-变体：
-- 不带 cite：去掉 `<span class="cite">` 即可
-- 带英文金句：`<em class="en">"Thin Harness, Fat Skills."</em>`
-- 在 hero 页使用：外层加 `style="position:relative;z-index:2"`（避免被背景遮罩盖住）
+Variants:
+- Without cite: simply remove the `<span class="cite">` element
+- With English quote: `<em class="en">"Thin Harness, Fat Skills."</em>`
+- On hero pages: add `style="position:relative;z-index:2"` to the outer wrapper (to prevent it from being covered by the background overlay)
 
 ---
 
-## Stat 数字矩阵
+## Stat Number Matrix
 
-展示数据指标，常与 `.grid-6` / `.grid-4` 配合。
+For displaying data metrics, commonly used with `.grid-6` / `.grid-4`.
 
 ```html
 <div class="grid-6">
   <div class="stat">
     <span class="m">Duration</span>
-    <span class="n">64<em style="font-size:.4em;opacity:.5;font-style:normal"> 天</em></span>
-    <span class="l">从 0 到现在</span>
+    <span class="n">64<em style="font-size:.4em;opacity:.5;font-style:normal"> days</em></span>
+    <span class="l">From zero to now</span>
   </div>
-  <!-- ... 更多 stat ... -->
+  <!-- ... more stats ... -->
 </div>
 ```
 
-三段式结构：`.m` 等宽小标签 → `.n` 巨型数字 → `.l` 描述说明。数字后的单位用 `<em>` 缩小到 0.4em，opacity 0.5。
+Three-part structure: `.m` monospace small label → `.n` giant number → `.l` description. Units after numbers use `<em>` scaled down to 0.4em, opacity 0.5.
 
-**常用布局容器**：
-- `.grid-6` — 3×2 网格（最常用，6 个 stat）
-- `.grid-4` — 2×2 网格（4 个 stat）
-- `.grid-3` — 3 等分单行（3 个 stat / pillar）
+**Common layout containers**:
+- `.grid-6` — 3x2 grid (most common, 6 stats)
+- `.grid-4` — 2x2 grid (4 stats)
+- `.grid-3` — 3-column single row (3 stats / pillars)
 
 ---
 
-## Platform 平台卡
+## Platform Card
 
-展示社交平台 / 渠道 + 粉丝数。
+For displaying social platforms / channels + follower counts.
 
 ```html
 <div class="plat">
   <div class="sub">Weibo</div>
-  <div class="name">微博</div>
+  <div class="name">Weibo</div>
   <div class="nb">289K</div>
 </div>
 ```
 
-可选第四行（补充说明）：
+Optional fourth row (supplementary note):
 ```html
 <div class="body-zh" style="font-size:max(11px,.8vw);opacity:.5;margin-top:.6vh">
-  含小绿书同步
+  Synced with Xiaolvshu
 </div>
 ```
 
-**"Also On" 变体**（补充平台）：
+**"Also On" variant** (additional platforms):
 ```html
 <div class="plat" style="border-top-style:dashed;opacity:.72">
   <div class="sub">Also On</div>
   <div class="body-zh" style="font-weight:600;margin-top:.8vh">
-    B 站　·　知乎
+    Bilibili　·　Zhihu
   </div>
 </div>
 ```
 
 ---
 
-## Rowline 表格行
+## Rowline Table Row
 
-列表式内容，每行一个条目。
+List-style content, one item per row.
 
 ```html
 <div class="rowline">
   <div class="k">CLAUDE.md</div>
-  <div class="v">你该怎么做事 —— 行为规则 + 工作偏好 + 禁止事项</div>
+  <div class="v">How you should work — behavioral rules + work preferences + prohibitions</div>
   <div class="m">EMPLOYEE · HANDBOOK</div>
 </div>
 ```
 
-三列结构：`.k` 衬线关键词 · `.v` 正文描述 · `.m` 等宽标签（右对齐）。第一个和最后一个 rowline 自动加上下边框。
+Three-column structure: `.k` serif keyword · `.v` body description · `.m` monospace label (right-aligned). The first and last rowline automatically get top/bottom borders.
 
-**变体：2 列**：`style="grid-template-columns:1fr 3fr"` 去掉 `.m` 列。
+**Variant: 2 columns**: `style="grid-template-columns:1fr 3fr"` and omit the `.m` column.
 
 ---
 
-## Pillar 支柱卡
+## Pillar Card
 
-三支柱结构，常用于"概念并列"类型页面。
+Three-pillar structure, commonly used for "parallel concepts" pages.
 
 ```html
 <div class="grid-3">
   <div class="pillar">
     <div class="ic">01</div>
-    <div class="t">三层<br>文档体系</div>
-    <div class="d">CLAUDE.md<br>+ 项目知识库<br>+ 护栏文件</div>
+    <div class="t">Three-Layer<br>Documentation</div>
+    <div class="d">CLAUDE.md<br>+ Project Knowledge Base<br>+ Guardrail Files</div>
   </div>
-  <!-- ... 更多 pillar ... -->
+  <!-- ... more pillars ... -->
 </div>
 ```
 
-**带图标的 pillar（用于强调性页面）**：
+**Pillar with icon (for emphasis pages)**:
 ```html
 <div class="pillar" style="padding:4vh 2vw;border:1px solid currentColor;border-color:rgba(10,10,11,.2)">
   <div class="ic"><i data-lucide="compass" class="ico-lg"></i></div>
-  <div class="t">判断力</div>
-  <div class="d">决策和方向的权威。<br>取舍、品味、方向感。</div>
+  <div class="t">Judgment</div>
+  <div class="d">Authority over decisions and direction.<br>Trade-offs, taste, sense of direction.</div>
 </div>
 ```
 
-`.ic` 可以是序号（`01 / 02 / 03` 或 `A. / B. / C.`），也可以是 Lucide 图标。
+`.ic` can be a sequence number (`01 / 02 / 03` or `A. / B. / C.`), or a Lucide icon.
 
 ---
 
 ## Tag & Kicker
 
-**Kicker** 是标题上方的小提示文字（等宽、全大写、小字号）：
+**Kicker** is the small hint text above the title (monospace, all-caps, small font):
 ```html
-<div class="kicker">过去 64 天 · 开发篇</div>
-<div class="h1-zh">一个人，做了什么。</div>
+<div class="kicker">Past 64 Days · Development</div>
+<div class="h1-zh">What one person built.</div>
 ```
 
-**Tag** 是独立的标签胶囊（带边框）：
+**Tag** is a standalone label capsule (with border):
 ```html
 <div style="display:flex;gap:1.6vw;flex-wrap:wrap">
-  <div class="tag">早上 10 点起床</div>
-  <div class="tag">周二 / 四下午健身</div>
-  <div class="tag">晚上照样看剧 · 玩游戏</div>
+  <div class="tag">Wake up at 10am</div>
+  <div class="tag">Gym on Tue / Thu afternoons</div>
+  <div class="tag">Still watch shows · play games at night</div>
 </div>
 ```
 
 ---
 
-## Figure 图片框
+## Figure Image Frame
 
-**这是本模板最容易踩坑的组件，务必遵守以下规则**。
+**This is the component most prone to mistakes in this template — follow these rules carefully**.
 
-### 基础结构
+### Basic Structure
 
 ```html
 <figure class="tile">
   <div class="frame-img" style="height:26vh">
-    <img src="图片素材/xxx.png" alt="说明">
+    <img src="images/xxx.png" alt="Description">
   </div>
   <figcaption class="frame-cap">
-    <span class="pf">推特 · Twitter</span>
+    <span class="pf">Twitter · Twitter</span>
     <span class="nb">137K</span>
   </figcaption>
 </figure>
 ```
 
-### 关键约束（血泪经验，不要违反）
+### Key Constraints (Hard-won lessons — do not violate)
 
-1. **图片网格必须用 `height:Nvh` 固定高度**，不要用 `aspect-ratio`。
-   - 原因：网格里用 aspect-ratio 容易撑破父容器，导致图片堆叠。
-   - 推荐尺寸：`.h-16` (小型面板) / `.h-18` (紧凑条形) / `.h-22` (标准网格) / `.h-26` (突出展示) / `.h-28` (大图)。
-   - 单张主图可以用模板提供的比例类：`.r-16x9` / `.r-16x10` / `.r-4x3` / `.r-3x2` / `.r-3x4` / `.r-1x1`。
-   - 同一组图片必须使用同一个高度类,不要一张 `25vh`、一张 `21vh` 混用。
+1. **Image grids must use `height:Nvh` for fixed height** — do not use `aspect-ratio`.
+   - Reason: Using aspect-ratio in grids can easily blow out the parent container, causing images to stack.
+   - Recommended sizes: `.h-16` (small panel) / `.h-18` (compact strip) / `.h-22` (standard grid) / `.h-26` (prominent display) / `.h-28` (large image).
+   - Single hero images can use the template's ratio classes: `.r-16x9` / `.r-16x10` / `.r-4x3` / `.r-3x2` / `.r-3x4` / `.r-1x1`.
+   - Images in the same group must use the same height class — don't mix `25vh` and `21vh`.
 
-2. **`object-position:top center`（已在 CSS 里设好）**，只允许裁掉底部。
-   - 严禁裁剪左右和顶部 —— 这是图片的核心身份信息区。
+2. **`object-position:top center` (already set in CSS)** — only the bottom may be cropped.
+   - Cropping left, right, or top is strictly forbidden — that's where the image's core identity information is.
 
-3. **网格里多张图时，用内联 grid 而不是 `grid-3`**：
+3. **When using multiple images in a grid, use inline grid instead of `grid-3`**:
    ```html
    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1vh 1.2vw">
      <figure class="tile">...</figure>
@@ -273,114 +273,114 @@
    </div>
    ```
 
-4. **图片与布局其他部分对齐**：使用 `.grid-2-7-5` / `.grid-2-6-6` / `.grid-2-8-4` 的 grid 结构自然顶对齐。不要给图片加 `align-self:end`。
+4. **Align images with other layout elements**: Use `.grid-2-7-5` / `.grid-2-6-6` / `.grid-2-8-4` grid structures for natural top alignment. Don't add `align-self:end` to images.
 
-5. **信息图 / 截图再设计**：给 `.frame-img` 同时加 `.fit-contain`，避免图内文字和标注被裁切。
+5. **Infographics / screenshot redesigns**: Add `.fit-contain` to `.frame-img` to prevent text and annotations in the image from being cropped.
 
-6. **用户原始截图比例不合适时**：优先重新生成"截图再设计 / UI 情景图"到目标比例,不要把原图硬塞成长条。
+6. **When user's original screenshot has unsuitable proportions**: Prefer regenerating a "screenshot redesign / UI mockup" at the target ratio — don't force the original into an elongated strip.
 
-### Frame Caption 变体
+### Frame Caption Variants
 
 ```html
-<!-- 标准：左 figure 名，右数字 -->
+<!-- Standard: left figure name, right number -->
 <figcaption class="frame-cap">
-  <span class="pf">推特 · Twitter</span>
+  <span class="pf">Twitter · Twitter</span>
   <span class="nb">137K</span>
 </figcaption>
 
-<!-- 带编号 -->
+<!-- With index number -->
 <figcaption class="frame-cap">
   <span class="idx">01</span>
-  <span class="pf">AI 润色</span>
+  <span class="pf">AI Polish</span>
   <span>Polish</span>
 </figcaption>
 ```
 
-### 图片占位（设计阶段占位符）
+### Image Placeholder (Design-phase placeholder)
 
-图片还没有就位时，用虚线框占位：
+When images aren't ready yet, use a dashed border placeholder:
 ```html
 <div class="img-slot r-4x3">  <!-- r-4x3 / r-16x9(default) / r-3x2 / r-1x1 -->
   <span class="plus">+</span>
-  <span class="label">GitHub 截图位置</span>
+  <span class="label">GitHub screenshot placeholder</span>
 </div>
 ```
 
 ---
 
-## Icons 图标
+## Icons
 
-**严禁使用 emoji**。用 Lucide via CDN（template.html 已引入）。
+**Emoji is strictly forbidden**. Use Lucide via CDN (already included in template.html).
 
 ```html
-<i data-lucide="compass" class="ico-lg"></i>     <!-- 大图标（pillar 用） -->
-<i data-lucide="target" class="ico-md"></i>      <!-- 中图标（列表项用） -->
-<i data-lucide="check-circle" class="ico-sm"></i>  <!-- 小图标（inline 用） -->
+<i data-lucide="compass" class="ico-lg"></i>     <!-- Large icon (for pillars) -->
+<i data-lucide="target" class="ico-md"></i>      <!-- Medium icon (for list items) -->
+<i data-lucide="check-circle" class="ico-sm"></i>  <!-- Small icon (for inline use) -->
 ```
 
-**常用 Lucide 图标名**（按含义分组）：
+**Common Lucide icon names** (grouped by meaning):
 
-- 判断类：`compass`, `target`, `crosshair`, `search-check`
-- 关系类：`share-2`, `users`, `network`, `link`, `handshake`
-- 品牌类：`crown`, `gem`, `award`, `star`, `badge-check`
-- 流程类：`workflow`, `route`, `arrow-right-left`, `repeat`
-- 数据类：`grid-2x2`, `bar-chart-3`, `trending-up`, `activity`
-- 审美类：`palette`, `brush`, `eye`, `sparkles`
-- 对错类：`check-circle`, `x-circle`, `check`, `x`
-- 方向类：`arrow-right`, `arrow-up-right`, `corner-down-right`
+- Judgment: `compass`, `target`, `crosshair`, `search-check`
+- Relationships: `share-2`, `users`, `network`, `link`, `handshake`
+- Branding: `crown`, `gem`, `award`, `star`, `badge-check`
+- Process: `workflow`, `route`, `arrow-right-left`, `repeat`
+- Data: `grid-2x2`, `bar-chart-3`, `trending-up`, `activity`
+- Aesthetics: `palette`, `brush`, `eye`, `sparkles`
+- Right/Wrong: `check-circle`, `x-circle`, `check`, `x`
+- Direction: `arrow-right`, `arrow-up-right`, `corner-down-right`
 
-**图标与文字 inline 组合**：
+**Icon + text inline combination**:
 ```html
 <div class="h3-zh" style="display:flex;align-items:center;gap:.8em">
   <i data-lucide="target" class="ico-md"></i>
-  判断 — 什么值得写
+  Judgment — What's worth writing
 </div>
 ```
 
 ---
 
-## Ghost 巨型背景字
+## Ghost Giant Background Text
 
-用作"装饰性背景字"，极低透明度，营造杂志感。
+Used as "decorative background text" at very low opacity to create a magazine feel.
 
 ```html
 <div class="ghost" style="right:-6vw;top:-8vh">BUT</div>
 <div class="ghost" style="left:-8vw;bottom:-18vh;font-style:italic">Harness</div>
 ```
 
-- 字号 34vw，opacity 0.06
-- 常用定位：`right:-6vw;top:-8vh`（右上超出）/ `left:-8vw;bottom:-18vh`（左下超出）
-- 内容：英文单词或数字（章节序号 01/02/03、关键词 BUT/NOW/HERE）
+- Font size 34vw, opacity 0.06
+- Common positions: `right:-6vw;top:-8vh` (upper-right overflow) / `left:-8vw;bottom:-18vh` (lower-left overflow)
+- Content: English words or numbers (chapter numbers 01/02/03, keywords BUT/NOW/HERE)
 
-**注意**：使用 ghost 的页面里，其他内容要加 `position:relative;z-index:2` 避免被压到下面。
+**Note**: On pages using ghost, other content needs `position:relative;z-index:2` to avoid being pushed below it.
 
 ---
 
-## Highlight 荧光标记
+## Highlight Marker
 
-行内短语的"荧光笔"效果：
+Inline "highlighter pen" effect for short phrases:
 
 ```html
-<span class="hi">不是</span>
-<span class="hi">一次性爆发</span>
+<span class="hi">not</span>
+<span class="hi">a one-time burst</span>
 ```
 
-在文字底部生成一条半透明高亮条。深色主题用亮条，浅色主题用暗条（CSS 已处理）。
+Generates a semi-transparent highlight bar beneath the text. Dark themes use a bright bar, light themes use a dark bar (already handled in CSS).
 
-**适合场景**：只对关键 1-3 个词使用，不要大面积用。
+**Best for**: Use only on 1-3 key words — don't apply broadly.
 
 ---
 
-## Motion 动效系统
+## Motion Animation System
 
-整套 deck 默认开启翻页入场动画,由 Motion One(vanilla 版 Framer Motion,约 4KB)驱动。
+The entire deck has page-entry animations enabled by default, powered by Motion One (vanilla version of Framer Motion, ~4KB).
 
-### 加载方式
+### Loading Method
 
-`assets/template.html` 底部的 module script 会先尝试**本地** `assets/motion.min.js`,失败则回落到 **jsdelivr CDN**,两者都失败则强制把所有带 `data-anim` 的元素设为 `opacity:1`—— 内容永远可读,演示不依赖网络。
+The module script at the bottom of `assets/template.html` first tries the **local** `assets/motion.min.js`, falls back to **jsdelivr CDN** on failure, and if both fail, forces all elements with `data-anim` to `opacity:1` — content is always readable, presentations don't depend on network.
 
 ```js
-// template 里的核心加载器(不用改)
+// Core loader in template (don't modify)
 let motion;
 try { motion = await import('./assets/motion.min.js'); }
 catch(e1) {
@@ -391,49 +391,49 @@ catch(e1) {
 }
 ```
 
-### 数据属性驱动
+### Data Attribute Driven
 
-你只需要在 HTML 里加两种属性:
+You only need to add two types of attributes in the HTML:
 
 ```html
-<!-- 1. 在 section 上选 recipe(可选,默认 cascade / hero 自动) -->
+<!-- 1. Choose a recipe on the section (optional, defaults to cascade / hero auto) -->
 <section class="slide light" data-animate="quote">
 
-<!-- 2. 在需要入场的元素上加 data-anim(可选值:left/right/line/step/divider) -->
-<h1 class="h-xl" data-anim>大标题</h1>
+<!-- 2. Add data-anim on elements that should animate in (values: left/right/line/step/divider) -->
+<h1 class="h-xl" data-anim>Main Title</h1>
 <div class="stat-card" data-anim>...</div>
-<div data-anim="left">左列内容</div>
-<span data-anim="line" style="display:block">引用第一行</span>
+<div data-anim="left">Left column content</div>
+<span data-anim="line" style="display:block">First line of quote</span>
 ```
 
-### 5 种 recipe 一览
+### 5 Recipes Overview
 
-| recipe | 触发方式 | 行为 | 代表布局 |
+| Recipe | Trigger | Behavior | Representative Layouts |
 |---|---|---|---|
-| `cascade`(默认) | 不加 `data-animate` 即为此值 | 所有 `data-anim` 逐个 stagger 淡入,75ms/step | Layout 3 / 4 / 5 / 10 |
-| `hero` | `.hero` slide 自动用此值 | 慢节奏 stagger,仪式感更强,160ms/step | Layout 1 / 2 / 7 |
-| `quote` | `data-animate="quote"` | 其他元素先出,`data-anim="line"` 的行 550ms 间隔逐句揭示 | Layout 8 |
-| `directional` | `data-animate="directional"` | `data-anim="left"` 从左滑入 → divider → `data-anim="right"` 从右滑入 | Layout 9 |
-| `pipeline` | `data-animate="pipeline"` | 翻到此页 step 保持 15% 透明;按 →/空格/滚轮逐个点亮,最后一步才放行翻页 | Layout 6 |
+| `cascade` (default) | No `data-animate` attribute needed | All `data-anim` elements stagger fade in, 75ms/step | Layout 3 / 4 / 5 / 10 |
+| `hero` | `.hero` slide uses this automatically | Slower stagger, more ceremonial feel, 160ms/step | Layout 1 / 2 / 7 |
+| `quote` | `data-animate="quote"` | Other elements appear first, `data-anim="line"` rows reveal sequentially at 550ms intervals | Layout 8 |
+| `directional` | `data-animate="directional"` | `data-anim="left"` slides in from left → divider → `data-anim="right"` slides in from right | Layout 9 |
+| `pipeline` | `data-animate="pipeline"` | On page entry, steps remain at 15% opacity; pressing →/space/scroll lights them up one by one, page advances only after the last step | Layout 6 |
 
-### 给 slide 选 recipe 的决策树
+### Decision Tree for Choosing a Recipe
 
-1. **它是 `.hero` slide 吗?** → 不用加 `data-animate`,自动用 `hero`
-2. **它是大引用金句页?** → `data-animate="quote"`,每句用 `<span data-anim="line" style="display:block">`
-3. **它是左右对比 Before/After?** → `data-animate="directional"`,左列 `data-anim="left"`、右列 `data-anim="right"`
-4. **它是流水线分步讲解?** → `data-animate="pipeline"`,每步 `data-anim="step"`
-5. **其他所有正文页** → 什么也不加,自动用 `cascade`
+1. **Is it a `.hero` slide?** → Don't add `data-animate`, it automatically uses `hero`
+2. **Is it a big quote page?** → `data-animate="quote"`, each line uses `<span data-anim="line" style="display:block">`
+3. **Is it a left-right Before/After comparison?** → `data-animate="directional"`, left column `data-anim="left"`, right column `data-anim="right"`
+4. **Is it a pipeline step-by-step walkthrough?** → `data-animate="pipeline"`, each step gets `data-anim="step"`
+5. **All other body pages** → Add nothing, the default `cascade` looks great
 
-### 什么元素该加 `data-anim`?
+### Which Elements Should Get `data-anim`?
 
-- ✅ 每一层有独立语义的块:kicker / h1 / h-xl / lead / callout / stat-card / figure / tag / rowline
-- ✅ 多列结构里每一列,让它们逐列淡入而不是一起
-- ❌ 不要在容器(`.grid-6` / `.frame`)上加,只加给叶子元素
-- ❌ 不要在每个 `<li>` 上加,一般在 `<ul>` 层加就够
-- ❌ 如果某页不想要任何动画(比如过渡页),整页不加 `data-anim` 即可 — Motion One 只对带标记的元素生效
+- ✅ Each semantically independent block: kicker / h1 / h-xl / lead / callout / stat-card / figure / tag / rowline
+- ✅ Each column in multi-column structures, so they fade in one by one instead of all at once
+- ❌ Don't add to containers (`.grid-6` / `.frame`), only add to leaf elements
+- ❌ Don't add to every `<li>` — adding at the `<ul>` level is usually sufficient
+- ❌ If a page shouldn't have any animation (e.g., transition pages), simply don't add `data-anim` — Motion One only targets marked elements
 
-### 常见问题
+### Common Issues
 
-- **图片闪一下再出现?** 这是预期行为,翻页中段(450ms 时)触发动画
-- **Pipeline 页卡住翻不下页?** 正确的,按 → 一步一步点亮 step,全部点亮后再按 → 才翻页
-- **内容静态时也不显示?** 检查 motion.min.js 是否在 `assets/` 下;或者浏览器控制台看错误信息
+- **Image flashes before appearing?** This is expected behavior — animation triggers mid-transition (at 450ms)
+- **Pipeline page stuck, can't advance?** Correct — press → to light up steps one by one; only after all are lit does → advance to the next page
+- **Content doesn't show even in static mode?** Check if motion.min.js exists in `assets/`; or check the browser console for errors
