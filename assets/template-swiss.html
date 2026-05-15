@@ -2456,20 +2456,20 @@ async function exportPPTX(){
       const slideLeft=el.getBoundingClientRect().left;
 
       const textEls=[...el.querySelectorAll(TEXT_SEL)].filter(t=>t.textContent.trim()&&t.offsetHeight>0);
-      textEls.forEach(t=>t.dataset._export='1');
+      textEls.forEach(t=>t.classList.add('_pptx-hide'));
 
       const captured=await html2canvas(el,{
         scale:2,useCORS:true,allowTaint:true,
         width:vw,height:vh,backgroundColor:bgColor,logging:false,
         onclone:function(doc){
           doc.querySelectorAll('[data-anim]').forEach(a=>{a.style.opacity='1';a.style.transform='none';});
-          doc.querySelectorAll('[data-_export]').forEach(t=>{t.style.color='transparent';t.style.webkitTextFillColor='transparent';});
+          doc.querySelectorAll('._pptx-hide').forEach(t=>{t.style.visibility='hidden';});
           const h=doc.getElementById('hint');if(h)h.style.display='none';
           const n=doc.getElementById('nav');if(n)n.style.display='none';
           const o=doc.getElementById('overview');if(o)o.style.display='none';
         }
       });
-      textEls.forEach(t=>delete t.dataset._export);
+      textEls.forEach(t=>t.classList.remove('_pptx-hide'));
 
       const final=document.createElement('canvas');
       final.width=captured.width;final.height=captured.height;
@@ -2497,7 +2497,8 @@ async function exportPPTX(){
         const m=color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
         color=m?((1<<24)+(+m[1]<<16)+(+m[2]<<8)+(+m[3])).toString(16).slice(1):'0A0A0A';
         const italic=cs.fontStyle==='italic';
-        slide.addText(t.textContent.trim(),{
+        const txt=t.innerText||t.textContent.trim();
+        slide.addText(txt,{
           x,y,w,h,fontSize:Math.round(fsPt),fontFace:ff,
           color,bold:fw>=600,italic,
           valign:'top',shrinkText:true,
